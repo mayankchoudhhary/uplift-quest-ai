@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Flame, Heart, MessageCircle, Users, TrendingUp, Award, AlertCircle } from "lucide-react";
+import { Flame, Heart, MessageCircle, Users, TrendingUp, Award, AlertCircle, LogOut } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import CrisisModal from "@/components/CrisisModal";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [streak, setStreak] = useState(0);
   const [badges, setBadges] = useState<string[]>([]);
   const [showCrisis, setShowCrisis] = useState(false);
@@ -33,6 +35,17 @@ const Dashboard = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    toast({
+      title: "Logged out",
+      description: "Your progress has been saved. See you next time!",
+    });
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  };
+
   return (
     <div className="min-h-screen bg-subtle-gradient pb-20">
       {/* Crisis Support Button - Always visible */}
@@ -43,6 +56,17 @@ const Dashboard = () => {
       >
         <AlertCircle className="w-4 h-4 mr-2" />
         Crisis Support
+      </Button>
+
+      {/* Logout Button */}
+      <Button
+        onClick={handleLogout}
+        variant="outline"
+        className="fixed top-4 left-4 z-50 shadow-soft"
+        size="sm"
+      >
+        <LogOut className="w-4 h-4 mr-2" />
+        Logout
       </Button>
 
       <div className="container max-w-4xl mx-auto p-6 pt-16">

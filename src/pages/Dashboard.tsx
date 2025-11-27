@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +8,7 @@ import Navigation from "@/components/Navigation";
 import CrisisModal from "@/components/CrisisModal";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [streak, setStreak] = useState(0);
   const [badges, setBadges] = useState<string[]>([]);
   const [showCrisis, setShowCrisis] = useState(false);
@@ -87,13 +89,19 @@ const Dashboard = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-4 mb-8">
-          <Card className="p-6 hover:shadow-elevated transition-all cursor-pointer border-primary/20 hover:border-primary">
+          <Card 
+            onClick={() => navigate("/mentor")}
+            className="p-6 hover:shadow-elevated transition-all cursor-pointer border-primary/20 hover:border-primary"
+          >
             <MessageCircle className="w-8 h-8 text-primary mb-3" />
             <h3 className="font-semibold mb-1">AI Mentor</h3>
             <p className="text-sm text-muted-foreground">Talk to your recovery coach</p>
           </Card>
 
-          <Card className="p-6 hover:shadow-elevated transition-all cursor-pointer border-secondary/20 hover:border-secondary">
+          <Card 
+            onClick={() => navigate("/community")}
+            className="p-6 hover:shadow-elevated transition-all cursor-pointer border-secondary/20 hover:border-secondary"
+          >
             <Users className="w-8 h-8 text-secondary mb-3" />
             <h3 className="font-semibold mb-1">Community</h3>
             <p className="text-sm text-muted-foreground">Connect with others</p>
